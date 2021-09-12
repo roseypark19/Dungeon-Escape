@@ -51,7 +51,7 @@ const BOSS_DATA = [{width : 32, height : 36, sprite : "./sprites/bigdemon.png"},
                    {width : 32, height : 32, sprite : "./sprites/bigogre.png"}, 
                    {width : 32, height : 34, sprite : "./sprites/bigzombie.png"}];
 
-const TILE_ANIMATIONS = { 27: { frameCount: 4, frameDuration: 0.5 }, 39: { frameCount: 3, frameDuration: 0.2 }, 
+const TILE_ANIMATIONS = { 27: { frameCount: 4, frameDuration: 0.75 }, 39: { frameCount: 3, frameDuration: 0.2 }, 
                           42: { frameCount: 3, frameDuration: 0.2 }, 45: { frameCount: 3, frameDuration: 0.2 }, 
                           48: { frameCount: 3, frameDuration: 0.2 }};
 
