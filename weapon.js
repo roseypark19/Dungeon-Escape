@@ -15,7 +15,9 @@ class Weapon {
         // this.y = this.hero.y + PARAMS.SCALE * (HERO_DIMENSIONS.height - this.data.height) + this.vertAdjust - this.pixelsAboveGround;
         this.x = 0;
         this.y = 0;
-        this.elapsedTime = 0;
+        this.elapsedTimeOscillate = 0;
+        this.elapsedTimeShoot = 0;
+        this.shootTime = 0.15;
         this.oscillateTime = 0.02;
         this.maxAdjust = 14 / 3 * PARAMS.SCALE;
         this.counter = 0;
@@ -60,9 +62,9 @@ class Weapon {
         // if (this.hero.shooting === 0) {
             //if (changeTime) 
         
-        this.elapsedTime += this.game.clockTick; // update vertical oscillation data
-        if (this.elapsedTime >= this.oscillateTime) {
-            this.elapsedTime = 0;
+        this.elapsedTimeOscillate += this.game.clockTick; // update vertical oscillation data
+        if (this.elapsedTimeOscillate >= this.oscillateTime) {
+            this.elapsedTimeOscillate = 0;
             this.vertAdjust = this.oscillate(this.counter, 0, this.maxAdjust) * -1;
             this.counter = (this.counter + 1) % (2 * this.maxAdjust);
         }
@@ -78,6 +80,18 @@ class Weapon {
             let drawAngle = Math.atan2(drawVect.y, drawVect.x);
             if (drawAngle < 0) drawAngle += 2 * Math.PI;
             this.rotationAngle = drawAngle;
+
+            // check if it's time to shoot again
+            this.elapsedTimeShoot += this.game.clockTick;
+            if (this.elapsedTimeShoot >= this.shootTime) {
+                // console.log("entered")
+                this.elapsedTimeShoot = -this.shootTime;
+                this.game.addEntity(new Projectile(this.game, this.hero.facing === 0 ? 
+                                                   this.x + this.BB.width * 3 / 4 - this.data.projectile_width * PARAMS.SCALE / 2 : 
+                                                   this.x + this.BB.width / 4 - this.data.projectile_width * PARAMS.SCALE / 2, this.y, 
+                                                   unitVect.x * this.data.projectile_velocity, unitVect.y * this.data.projectile_velocity,
+                                                   this.data.projectile_width, this.data.projectile_height, this.data.projectile_sprite, this.data.range));
+            }
         } else {
             let centerDrawPoint = { x: this.hero.BB.center.x + Math.cos(this.rotationAngle) * this.rotationRadius, 
                                     y: this.hero.BB.center.y + this.hero.BB.height / 4 + Math.sin(this.rotationAngle) * this.rotationRadius };
@@ -85,6 +99,7 @@ class Weapon {
             // this.degreesTravelled++;
             this.x = centerDrawPoint.x - this.data.width * this.scale / 2;
             this.y = centerDrawPoint.y - this.data.height * this.scale / 2 + this.maxAdjust / 2 + this.vertAdjust;  
+            this.elapsedTimeShoot = 0;
         }
         
         // console.log(this.rotationAngle)

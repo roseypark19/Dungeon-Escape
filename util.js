@@ -41,11 +41,10 @@ const HERO_DIMENSIONS = { width : 16, height : 28 };
 //                      {width : 42/3, height : 42/3, vertPadding : 1/3, horizPadding : 12/3, spacing : 2/3, shootPadding : 7/3, sprite : "./sprites/sword_gold.png" }, 
 //                      {width : 60/3, height : 60/3, vertPadding : 0, horizPadding : 24/3, spacing : 8/3, shootPadding : 17/3, sprite : "./sprites/spear.png"}];
 const WEAPON_DATA = [{width : 10, height : 22, sprite : "./sprites/baton.png"}, 
-                     {width : 30, height : 30, sprite : "./sprites/staff.png"}, 
+                     {width : 30, height : 30, sprite : "./sprites/staff.png", range: 500,
+                      projectile_sprite: "./sprites/fireball.png", projectile_velocity: 8, projectile_width: 13, projectile_height: 14}, 
                      {width : 24, height : 24, sprite : "./sprites/sword_gold.png" }, 
-                     {width : 8, height : 19, sprite : "./sprites/cleaver.png"}
-
-]
+                     {width : 8, height : 19, sprite : "./sprites/cleaver.png"}]
 
 const BOSS_DATA = [{width : 32, height : 36, sprite : "./sprites/bigdemon.png"}, 
                    {width : 32, height : 32, sprite : "./sprites/bigogre.png"}, 
@@ -58,6 +57,7 @@ const TILE_ANIMATIONS = { 27: { frameCount: 4, frameDuration: 0.75 }, 39: { fram
 const PARAMS = {
     BLOCKWIDTH : 16,
     DEBUG : false,
+    DEBUG_WIDTH : 1,
     DEBUG_COLOR: 'White',
     CANVAS_WIDTH : 1200,
     CANVAS_HEIGHT : 1200,

@@ -170,6 +170,7 @@ class Hero {
 
         // this.weapon.draw(ctx);
         if (PARAMS.DEBUG) {
+            ctx.lineWidth = PARAMS.DEBUG_WIDTH;
             ctx.strokeStyle = PARAMS.DEBUG_COLOR;
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
             ctx.strokeRect(this.collisionBB.x - this.game.camera.x, this.collisionBB.y - this.game.camera.y, this.collisionBB.width, this.collisionBB.height);

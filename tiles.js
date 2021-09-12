@@ -102,8 +102,8 @@ class MapLayer {
 
 
 class Boundary {
-    constructor(game, x, y, width, height, top, bottom, left, right) {
-        Object.assign(this, {game, x, y, width, height, top, bottom, left, right});
+    constructor(game, x, y, width, height, top, bottom, left, right, projectilePass) {
+        Object.assign(this, {game, x, y, width, height, top, bottom, left, right, projectilePass});
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
     };
 
@@ -113,6 +113,7 @@ class Boundary {
 
     draw(ctx) {
         if (PARAMS.DEBUG) {
+            ctx.lineWidth = PARAMS.DEBUG_WIDTH;
             ctx.strokeStyle = PARAMS.DEBUG_COLOR;
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }

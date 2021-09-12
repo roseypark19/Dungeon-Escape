@@ -2,6 +2,7 @@ var gameEngine = new GameEngine();
 
 var ASSET_MANAGER = new AssetManager();
 
+// sprites
 ASSET_MANAGER.queueDownload("./sprites/bigdemon.png");
 ASSET_MANAGER.queueDownload("./sprites/bigogre.png");
 ASSET_MANAGER.queueDownload("./sprites/bigzombie.png");
@@ -31,8 +32,10 @@ ASSET_MANAGER.queueDownload("./sprites/baton.png");
 ASSET_MANAGER.queueDownload("./sprites/sword_gold.png");
 ASSET_MANAGER.queueDownload("./sprites/cleaver.png");
 ASSET_MANAGER.queueDownload("./sprites/tiles.png");
-ASSET_MANAGER.queueDownload("./sprites/lvl1floor_walls.png");
-ASSET_MANAGER.queueDownload("./sprites/lvl1toppers.png");
+ASSET_MANAGER.queueDownload("./sprites/fireball.png");
+
+// music
+ASSET_MANAGER.queueDownload("./music/mudholes.mp3");
 
 ASSET_MANAGER.downloadAll(function () {
 	var canvas = document.getElementById('gameWorld');
