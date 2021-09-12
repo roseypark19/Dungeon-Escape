@@ -82,6 +82,7 @@ class SceneManager {
     };
 
     update() {
+        PARAMS.DEBUG = document.getElementById("debug").checked;
         let midpoint = { x : PARAMS.CANVAS_WIDTH / 2 - PARAMS.BLOCKWIDTH / 2, y : PARAMS.CANVAS_HEIGHT / 2 - PARAMS.BLOCKWIDTH / 2 };
         this.x = this.hero.x - midpoint.x;
         this.y = this.hero.y - midpoint.y;

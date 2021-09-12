@@ -4,6 +4,13 @@
 <head>
     <meta charset="utf-8">
     <title>Dungeon Escape</title>
+
+    <style>
+        body {
+            font-family: 'Concert One';
+            font-size: 40px;
+        }
+    </style>
   
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./timer.js"></script>
@@ -19,7 +26,18 @@
     <script type="text/javascript" src="./util.js"></script>
     <script type="text/javascript" src="./main.js"></script>
 </head>
+
 <body>
-    <canvas id="gameWorld" width="1200" height="1200" style="background: rgb(49, 3, 3); border: 5px solid rgb(0, 0, 0)" tabindex="0" autofocus></canvas>
+    
+    <div>
+        Dungeon Escape <br />
+    </div>
+
+    <canvas id="gameWorld" width="1168" height="1168" style="background: rgb(49, 3, 3); border: 5px solid rgb(0, 0, 0)" tabindex="0" autofocus></canvas>
+
+    <div>
+        <input type="checkbox" id="debug"> Debug
+    </div>
+
 </body>
 </html>
