@@ -174,7 +174,7 @@ class Hero {
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
             ctx.strokeRect(this.collisionBB.x - this.game.camera.x, this.collisionBB.y - this.game.camera.y, this.collisionBB.width, this.collisionBB.height);
             ctx.beginPath();
-            ctx.arc(this.collisionBB.center.x - this.game.camera.x, this.collisionBB.center.y - this.game.camera.y, 55, 0, Math.PI * 2);
+            ctx.arc(this.collisionBB.center.x - this.game.camera.x, this.collisionBB.center.y - this.game.camera.y, 45, 0, Math.PI * 2);
             ctx.stroke();
         }
         // if (weaponDrawn === false) {

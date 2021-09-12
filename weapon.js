@@ -20,7 +20,7 @@ class Weapon {
         this.maxAdjust = 12 / 3 * PARAMS.SCALE;
         this.counter = 0;
         this.rotationAngle = 0;
-        this.rotationRadius = 55 / 3 * PARAMS.SCALE;
+        this.rotationRadius = 45 / 3 * PARAMS.SCALE;
         this.degreesTravelled = 0;
         this.spritesheet = ASSET_MANAGER.getAsset(this.data.sprite);
         this.animations = [];
