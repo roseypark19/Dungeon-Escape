@@ -17,10 +17,10 @@ class Weapon {
         this.y = 0;
         this.elapsedTime = 0;
         this.oscillateTime = 0.02;
-        this.maxAdjust = 12 / 3 * PARAMS.SCALE;
+        this.maxAdjust = 14 / 3 * PARAMS.SCALE;
         this.counter = 0;
         this.rotationAngle = 0;
-        this.rotationRadius = 45 / 3 * PARAMS.SCALE;
+        this.rotationRadius = 60 / 3 * PARAMS.SCALE;
         this.degreesTravelled = 0;
         this.spritesheet = ASSET_MANAGER.getAsset(this.data.sprite);
         this.animations = [];
@@ -73,8 +73,8 @@ class Weapon {
                              y: mousePoint.y + this.game.camera.y - (this.hero.BB.center.y + this.hero.BB.height / 4) };
             let magnitude = Math.sqrt(Math.pow(drawVect.x, 2) + Math.pow(drawVect.y, 2));
             let unitVect = { x: drawVect.x / magnitude, y: drawVect.y / magnitude };
-            this.x = this.hero.BB.center.x + this.rotationRadius * unitVect.x - this.data.width * this.scale / 2;
-            this.y = this.hero.BB.center.y + this.hero.BB.height / 4 + this.rotationRadius * unitVect.y - this.data.height * this.scale / 2;
+            this.x = this.hero.BB.center.x + this.rotationRadius / 2 * unitVect.x - this.data.width * this.scale / 2;
+            this.y = this.hero.BB.center.y + this.hero.BB.height / 4 + this.rotationRadius / 2 * unitVect.y - this.data.height * this.scale / 2;
             let drawAngle = Math.atan2(drawVect.y, drawVect.x);
             if (drawAngle < 0) drawAngle += 2 * Math.PI;
             this.rotationAngle = drawAngle;
