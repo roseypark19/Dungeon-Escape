@@ -105,7 +105,6 @@ class Hero {
             let mousePoint = this.game.mouse ? this.game.mouse : this.game.click;
             this.facing = mousePoint.x < this.getCenterPoint().x - this.game.camera.x ? 1 : 0; 
         }
-        // this.weapon.update(true);
         this.updateBB();
 
         this.originalCollisionBB = this.collisionBB.previous;
@@ -118,41 +117,12 @@ class Hero {
                 }
             }
         });
-        // this.weapon.update();
     };
 
     updateBB() {
         this.BB = new BoundingBox(this.x, this.y, HERO_DIMENSIONS.width * PARAMS.SCALE, HERO_DIMENSIONS.height * PARAMS.SCALE, this.BB);
         this.collisionBB = new BoundingBox(this.x, this.y + (HERO_DIMENSIONS.height * 2 / 3 * PARAMS.SCALE), 
                                            HERO_DIMENSIONS.width * PARAMS.SCALE, HERO_DIMENSIONS.height * PARAMS.SCALE / 3, this.collisionBB);
-        // if (this.facing === 0) { // right
-        //     this.collisionBB = new BoundingBox(this.BB.left, this.BB.bottom - this.weapon.BB.height - this.weapon.maxAdjust - this.weapon.pixelsAboveGround, 
-        //                                        this.BB.width + this.weapon.BB.width, this.weapon.BB.height + this.weapon.maxAdjust + this.weapon.pixelsAboveGround, this.collisionBB);
-            // if (this.shooting === 1) {
-            //     this.collisionBB = new BoundingBox(this.BB.x, this.BB.bottom - this.weapon.BB.height - this.weapon.maxAdjust - this.weapon.pixelsAboveGround,
-            //                                        PARAMS.SCALE * (HERO_DIMENSIONS.width + this.weapon.data.spacing + this.weapon.data.shootPadding) + this.weapon.BB.width, 
-            //                                        this.weapon.BB.height + this.weapon.maxAdjust + this.weapon.pixelsAboveGround, this.collisionBB);
-            // } else {
-            //     this.collisionBB = new BoundingBox(this.BB.x, this.BB.bottom - this.weapon.BB.height - this.weapon.maxAdjust - this.weapon.pixelsAboveGround,
-            //                                        PARAMS.SCALE * (HERO_DIMENSIONS.width + this.weapon.data.spacing) + this.weapon.BB.width,
-            //                                        this.weapon.BB.height + this.weapon.maxAdjust + this.weapon.pixelsAboveGround, this.collisionBB);
-            // }      
-        // } else { // left
-        //     this.collisionBB = new BoundingBox(this.weapon.BB.left, this.BB.bottom - this.weapon.BB.height - this.weapon.maxAdjust - this.weapon.pixelsAboveGround, 
-                                            //    this.BB.width + this.weapon.BB.width, this.weapon.BB.height + this.weapon.maxAdjust + this.weapon.pixelsAboveGround, this.collisionBB);
-            // if (this.shooting === 1) {
-            //     this.collisionBB = new BoundingBox(this.weapon.BB.x - PARAMS.SCALE * this.weapon.data.shootPadding, 
-            //                                        this.BB.bottom - this.weapon.BB.height - this.weapon.maxAdjust - this.weapon.pixelsAboveGround,
-            //                                        PARAMS.SCALE * (HERO_DIMENSIONS.width + this.weapon.data.spacing + this.weapon.data.shootPadding) + this.weapon.BB.width, 
-            //                                        this.weapon.BB.height + this.weapon.maxAdjust + this.weapon.pixelsAboveGround, this.collisionBB);
-            // } else {
-            //     this.collisionBB = new BoundingBox(this.weapon.BB.x, 
-            //                                        this.BB.bottom - this.weapon.BB.height - this.weapon.maxAdjust - this.weapon.pixelsAboveGround,
-            //                                        PARAMS.SCALE * (HERO_DIMENSIONS.width + this.weapon.data.spacing) + this.weapon.BB.width, 
-            //                                        this.weapon.BB.height + this.weapon.maxAdjust + this.weapon.pixelsAboveGround, this.collisionBB);
-            // }
-            
-        // }
     };
 
     hasChangedDirection(acceleration, velocity) {
@@ -160,15 +130,8 @@ class Hero {
     };
     
     draw(ctx) {
-        // let weaponDrawn = false;
-        // if (this.weapon.rotationAngle >= 225 * Math.PI / 180 && this.weapon.rotationAngle <= 315 * Math.PI / 180) {
-        //     weaponDrawn = true;
-        //     this.weapon.draw(ctx);
-        // }
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, PARAMS.SCALE);
-        
 
-        // this.weapon.draw(ctx);
         if (PARAMS.DEBUG) {
             ctx.lineWidth = PARAMS.DEBUG_WIDTH;
             ctx.strokeStyle = PARAMS.DEBUG_COLOR;
@@ -178,9 +141,6 @@ class Hero {
             ctx.arc(this.collisionBB.center.x - this.game.camera.x, this.collisionBB.center.y - this.game.camera.y, 60, 0, Math.PI * 2);
             ctx.stroke();
         }
-        // if (weaponDrawn === false) {
-        //     this.weapon.draw(ctx);
-        // } 
     };
 
     getCenterPoint() {

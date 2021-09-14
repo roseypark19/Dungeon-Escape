@@ -32,13 +32,6 @@ class Projectile {
     };
 
     draw(ctx) {
-        // ctx.strokeStyle = 'Black';
-        // ctx.fillStyle = 'Red';
-        // ctx.lineWidth = 8;
-        // ctx.beginPath();
-        // ctx.arc(this.x - this.game.camera.x, this.y - this.game.camera.y, this.diameter / 2, 0, Math.PI * 2);
-        // ctx.stroke();
-        // ctx.fill();
         ctx.drawImage(this.spritesheet, 0, 0, 13, 14, this.x - this.game.camera.x, this.y - this.game.camera.y, this.width * PARAMS.SCALE, 
                                                                                                                 this.height * PARAMS.SCALE);
         if (PARAMS.DEBUG) {

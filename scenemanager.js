@@ -11,40 +11,10 @@ class SceneManager {
 
     loadLevel(level, heroX, heroY) {
 
-        // for (var row = 0; row < level.tiles.length; row++) {
-        //     for (var col = 0; col < level.tiles[row].length; col++) {
-        //         let code = level.tiles[row][col];
-        //         if (code == 1) { // wall
-        //             if (level.collisions[row][col] === 3) { // we have a corner (4 possible types)
-        //                 let neighborV = level.tiles[row - 1][col] === 1 ? { x : 0, y : -1 } : { x : 0, y : 1 };
-        //                 let neighborH = level.tiles[row][col + 1] === 1 ? { x : 1, y : 0 } : { x : -1, y : 0 };
-        //                 this.game.addEntity(new Wall(this.game, col * PARAMS.BLOCKWIDTH, row * PARAMS.BLOCKWIDTH, 
-        //                                              PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, level.collisions[row][col], neighborV, neighborH));
-        //             } else {
-        //                 this.game.addEntity(new Wall(this.game, col * PARAMS.BLOCKWIDTH, row * PARAMS.BLOCKWIDTH, 
-        //                                              PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, level.collisions[row][col], null, null));
-        //             }
-                    
-        //         } else if (code == 2) { // floor
-        //             this.game.addEntity(new Ground(this.game, col * PARAMS.BLOCKWIDTH, row * PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH));
-        //         }
-        //         }  
-        // }
-        // this.game.addEntity(new MapLayer(this.game, 0, 0, PARAMS.BLOCKWIDTH * 100, PARAMS.BLOCKWIDTH * 100, ASSET_MANAGER.getAsset(levelOneData.layer1)));
-        // this.hero.x = heroX;
-        // this.hero.y = heroY;
-        // this.game.addEntity(this.hero);
-        // this.game.addEntity(new Boss(this.game, 900, 1000, 2));
-        // this.game.addEntity(new MapLayer(this.game, 0, 0, PARAMS.BLOCKWIDTH * 100, PARAMS.BLOCKWIDTH * 100, ASSET_MANAGER.getAsset(levelOneData.layer2)));
-
         for (var i = 0; i < 3; i++) {
             for (var row = 0; row < level.tiles.length; row++) {
                 for (var col = 0; col < level.tiles[row].length; col++) {
                     let code = level.tiles[row][col][i];
-                    if (i === 2) {
-                        // console.log(code);
-                        // console.log(row); console.log(col);
-                    }
                     if (code !== 0) {
                         if (i < 2) { // a map tile
                             this.game.addEntity(new MapTile(this.game, col * PARAMS.BLOCKWIDTH * PARAMS.SCALE, row * PARAMS.BLOCKWIDTH * PARAMS.SCALE, 

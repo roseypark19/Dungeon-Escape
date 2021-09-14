@@ -11,6 +11,7 @@ class Boss {
         this.minVelocity = 1 / 3 * PARAMS.SCALE;
         this.proximityConstant = 75 / 3 * PARAMS.SCALE;
         this.velocity = { x : 0, y : 0 };
+        this.hp = 50;
         this.animations = [];
         this.updateBB();
         this.loadAnimations();
@@ -72,6 +73,12 @@ class Boss {
                 if (entity instanceof Boundary) {
                     resolveCollision(that, entity);
                     that.updateBB();  
+                } else if (entity instanceof Projectile) {
+                    entity.removeFromWorld = true;
+                    that.hp--;
+                    if (that.hp === 0) {
+                        that.removeFromWorld = true;
+                    }
                 }
             }
         });
@@ -97,10 +104,4 @@ class Boss {
     getCenterPoint() {
         return { x : this.x + BOSS_DATA[this.code].width * PARAMS.SCALE / 2, y : this.y + BOSS_DATA[this.code].height * PARAMS.SCALE / 2 };
     };
-
-    // distanceFromHero() {
-    //     let center = this.getCenterPoint;
-    //     let heroCenter = this.game.hero.getCenterPoint();
-    //     return Math.sqrt(Math.pow(center.x - heroCenter.x, 2) + Math.pow(center.y - heroCenter.y, 2));
-    // };
 };
