@@ -17,6 +17,14 @@ function distance(pt1, pt2) {
     return Math.sqrt(Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2));
 };
 
+function magnitude(vector) {
+    return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2));
+};
+
+function unitVector(vector) {
+    return {x: vector.x / magnitude(vector), y: vector.y / magnitude(vector)};
+};
+
 // creates an alias for requestAnimationFrame for backwards compatibility
 window.requestAnimFrame = (function () {
     return window.requestAnimationFrame ||
@@ -36,13 +44,9 @@ const HERO_SPRITES = ["./sprites/knight.png", "./sprites/knight_female.png", "./
 
 const HERO_DIMENSIONS = { width : 16, height : 28 };
 
-// const WEAPON_DATA = [{width : 50/3, height : 50/3, vertPadding : 0, horizPadding : 15/3, spacing : 6/3, shootPadding : 10/3, sprite : "./sprites/sword.png"}, 
-//                      {width : 86/3, height : 86/3, vertPadding : 13/3, horizPadding : 35/3, spacing : 9/3, shootPadding : 15/3, sprite : "./sprites/staff.png"}, 
-//                      {width : 42/3, height : 42/3, vertPadding : 1/3, horizPadding : 12/3, spacing : 2/3, shootPadding : 7/3, sprite : "./sprites/sword_gold.png" }, 
-//                      {width : 60/3, height : 60/3, vertPadding : 0, horizPadding : 24/3, spacing : 8/3, shootPadding : 17/3, sprite : "./sprites/spear.png"}];
 const WEAPON_DATA = [{width : 10, height : 22, sprite : "./sprites/baton.png"}, 
                      {width : 30, height : 30, sprite : "./sprites/staff.png", range: 500,
-                      projectile_sprite: "./sprites/fireball.png", projectile_velocity: 8, projectile_width: 13, projectile_height: 14}, 
+                      projectile : { sprite: "./sprites/fireball.png", velocity: 8, width: 13, height: 14, pattern: 0}}, 
                      {width : 24, height : 24, sprite : "./sprites/sword_gold.png" }, 
                      {width : 8, height : 19, sprite : "./sprites/cleaver.png"}]
 
@@ -63,40 +67,6 @@ const PARAMS = {
     CANVAS_HEIGHT : 1200,
     SCALE : 3
 };
-
-// const COLLISION = {
-//     // vertical collision tile
-//     1: function(collisionBB, originalCollisionBB, boundary) {
-//         var left = leftCollision(collisionBB, originalCollisionBB, boundary.BB);
-//         if (left) return left;
-//         return rightCollision(collisionBB, originalCollisionBB, boundary.BB);
-
-//     },
-
-//     // horizontal collision tile
-//     2: function(collisionBB, originalCollisionBB, boundary) {
-//         var top = topCollision(collisionBB, originalCollisionBB, boundary.BB);
-//         if (top) return top;
-//         return bottomCollision(collisionBB, originalCollisionBB, boundary.BB);
-//     },
-
-//     3: function(collisionBB, originalCollisionBB, boundary) {
-//         var vertical = boundary.neighborV.y > 0 ? topCollision(collisionBB, originalCollisionBB, boundary.BB) : bottomCollision(collisionBB, originalCollisionBB, boundary.BB);
-//         if (vertical) return vertical;
-//         return boundary.neighborH.x > 0 ? leftCollision(collisionBB, originalCollisionBB, boundary.BB) : rightCollision(collisionBB, originalCollisionBB, boundary.BB);
-//     },
-
-//     // block collision tile
-//     4: function(collisionBB, originalCollisionBB, boundary) {
-//         var top = topCollision(collisionBB, originalCollisionBB, boundary.BB);
-//         if (top) return top;
-//         var bottom = bottomCollision(collisionBB, originalCollisionBB, boundary.BB);
-//         if (bottom) return bottom;
-//         var left = leftCollision(collisionBB, originalCollisionBB, boundary.BB);
-//         if (left) return left;
-//         return rightCollision(collisionBB, originalCollisionBB, boundary.BB);
-//     }
-// };
 
 function collide(collisionBB, originalCollisionBB, boundary) {
     if (boundary.top) {

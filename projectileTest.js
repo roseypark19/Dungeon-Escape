@@ -1,9 +1,9 @@
 class Projectile {
-
-    constructor(game, x, y, velocity, width, height, sprite, shotPattern, range) {
-        Object.assign(this, {game, x, y, velocity, width, height, fromHero});
+    constructor(game, x, y, range, velocity, shotPattern, friendly, width, height, sprite) {
+        Object.assign(this, {game, x, y, range, velocity, shotPattern, friendly, width, height});
         this.spritesheet = ASSET_MANAGER.getAsset(sprite);
         this.originPoint = {x: this.x, y: this.y};
+        this.vectorPoint = {x: this.x, y: this.y};
         this.updateBB();
     }
 
@@ -12,12 +12,8 @@ class Projectile {
                                   this.width * PARAMS.SCALE * 2 / 3, this.height * PARAMS.SCALE * 2 / 3, this.BB);
     };
 
-    update() {
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
-        if (this.shotPattern <= 1 && distance(this.originPoint, {x: this.x, y: this.y}) > this.range) {
-            this.removeFromWorld = true;
-        }
+    update() {    
+        SHOT_PATTERNS[this.shotPattern](this);
         if (!this.removeFromWorld) {
             this.updateBB();
             var that = this;
@@ -29,6 +25,21 @@ class Projectile {
                 }
             });
         }   
+    };
+
+    updateVectorPoint() {
+        this.vectorPoint.x += this.velocity.x;
+        this.vectorPoint.y += this.velocity.y;
+        return distance(this.originPoint, this.vectorPoint) <= this.range;
+    };
+
+    getLinearDestination() {
+        let unitVel = unitVector(this.velocity);
+        if (this.reverse) {
+            unitVel.x *= -1;
+            unitVel.y *= -1;
+        }
+        return {x: this.originPoint.x + unitVel.x * this.range, y: this.originPoint.y + unitVel.y * this.range};
     };
 
     draw(ctx) {

@@ -144,7 +144,8 @@ class Hero {
     };
 
     getCenterPoint() {
-        return { x : this.x + HERO_DIMENSIONS.width * PARAMS.SCALE / 2, y : this.y + HERO_DIMENSIONS.height * PARAMS.SCALE / 2 };
+        // return { x : this.x + HERO_DIMENSIONS.width * PARAMS.SCALE / 2, y : this.y + HERO_DIMENSIONS.height * PARAMS.SCALE / 2 };
+        return this.collisionBB.center;
     };
 };
 

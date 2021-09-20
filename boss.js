@@ -12,6 +12,12 @@ class Boss {
         this.proximityConstant = 75 / 3 * PARAMS.SCALE;
         this.velocity = { x : 0, y : 0 };
         this.hp = 50;
+        this.elapsedTimeShoot = 0;
+        this.elapsedTimePattern = 0;
+        this.pattern = randomInt(Object.keys(SHOT_PATTERNS).length - 1) + 1;
+        this.dexterity = 0.2;
+        this.patternSwitch = 0.5;
+        this.range = 300;
         this.animations = [];
         this.updateBB();
         this.loadAnimations();
@@ -45,13 +51,12 @@ class Boss {
     update() {
         let center = this.getCenterPoint();
         let heroCenter = this.hero.getCenterPoint();
-        let distance = Math.sqrt(Math.pow(center.x - heroCenter.x, 2) + Math.pow(center.y - heroCenter.y, 2));
+        let dist = distance(center, heroCenter);
         let heroPrevious = this.hero.previousCenter;
-        if (distance <= this.attackDistance && distance > this.proximityConstant) {
+        if (dist <= this.attackDistance && dist > this.proximityConstant) {
             let vector = { x : heroPrevious.x - center.x, y : heroPrevious.y - center.y };
-            let magnitude = Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2));
-            let directionUnitVector = { x : vector.x / magnitude, y : vector.y / magnitude };
-            let newVelocity = Math.max(this.minVelocity, this.maxVelocity * distance / this.attackDistance);
+            let directionUnitVector = { x : vector.x / magnitude(vector), y : vector.y / magnitude(vector) };
+            let newVelocity = Math.max(this.minVelocity, this.maxVelocity * dist / this.attackDistance);
             this.velocity.x = directionUnitVector.x * newVelocity;
             this.velocity.y = directionUnitVector.y * newVelocity;
             this.facing = this.velocity.x > 0 ? 0 : 1;
@@ -65,6 +70,24 @@ class Boss {
         this.y += this.velocity.y;
         this.updateBB();
 
+        // projectile lauching
+        this.elapsedTimeShoot += this.game.clockTick;
+        if (dist <= this.attackDistance && this.elapsedTimeShoot >= this.dexterity) {
+            this.elapsedTimeShoot = 0;
+            let shotVector = {x: heroCenter.x - this.getCenterPoint().x, y: heroCenter.y - this.getCenterPoint().y};
+            let shotUnitVector = {x: shotVector.x / magnitude(shotVector), y: shotVector.y / magnitude(shotVector)};
+            this.game.addEntity(new Projectile(this.game, this.getCenterPoint().x, this.getCenterPoint().y, this.range,
+                                               {x: shotUnitVector.x * 2, y: shotUnitVector.y * 2}, this.pattern, false, 13, 14, "./sprites/fireball.png"));
+            this.elapsedTimePattern += this.game.clockTick;
+            if (this.elapsedTimePattern > this.patternSwitch) {
+                let oldPattern = this.pattern;
+                while (this.pattern === oldPattern) {
+                    this.pattern = randomInt(Object.keys(SHOT_PATTERNS).length - 1) + 1;
+                }
+                this.elapsedTimePattern = 0;
+            } 
+        }
+
         this.originalCollisionBB = this.collisionBB.previous;
         var that = this;
 
@@ -73,7 +96,7 @@ class Boss {
                 if (entity instanceof Boundary) {
                     resolveCollision(that, entity);
                     that.updateBB();  
-                } else if (entity instanceof Projectile) {
+                } else if (entity instanceof Projectile && entity.friendly) {
                     entity.removeFromWorld = true;
                     that.hp--;
                     if (that.hp === 0) {
@@ -102,6 +125,7 @@ class Boss {
     };
 
     getCenterPoint() {
-        return { x : this.x + BOSS_DATA[this.code].width * PARAMS.SCALE / 2, y : this.y + BOSS_DATA[this.code].height * PARAMS.SCALE / 2 };
+        //return { x : this.x + BOSS_DATA[this.code].width * PARAMS.SCALE / 2, y : this.y + BOSS_DATA[this.code].height * PARAMS.SCALE / 2 };
+        return this.collisionBB.center;
     };
 };

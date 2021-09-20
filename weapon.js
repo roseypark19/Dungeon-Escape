@@ -59,8 +59,7 @@ class Weapon {
             let mousePoint = this.game.mouse ? this.game.mouse : this.game.click;
             let drawVect = { x: mousePoint.x + this.game.camera.x - this.hero.BB.center.x, 
                              y: mousePoint.y + this.game.camera.y - (this.hero.BB.center.y + this.hero.BB.height / 4) };
-            let magnitude = Math.sqrt(Math.pow(drawVect.x, 2) + Math.pow(drawVect.y, 2));
-            let unitVect = { x: drawVect.x / magnitude, y: drawVect.y / magnitude };
+            let unitVect = unitVector(drawVect);
             this.x = this.hero.BB.center.x + this.rotationRadius / 2 * unitVect.x - this.data.width * this.scale / 2;
             this.y = this.hero.BB.center.y + this.hero.BB.height / 4 + this.rotationRadius / 2 * unitVect.y - this.data.height * this.scale / 2;
             let drawAngle = Math.atan2(drawVect.y, drawVect.x);
@@ -72,10 +71,11 @@ class Weapon {
             if (this.elapsedTimeShoot >= 0) {
                 this.elapsedTimeShoot = -this.shootTime * 2;
                 this.game.addEntity(new Projectile(this.game, this.hero.facing === 0 ? 
-                                                   this.x + this.BB.width * 3 / 4 - this.data.projectile_width * PARAMS.SCALE / 2 : 
-                                                   this.x + this.BB.width / 4 - this.data.projectile_width * PARAMS.SCALE / 2, this.y, 
-                                                   unitVect.x * this.data.projectile_velocity, unitVect.y * this.data.projectile_velocity,
-                                                   this.data.projectile_width, this.data.projectile_height, this.data.projectile_sprite, this.data.range));
+                                                   this.x + this.BB.width * 3 / 4 - this.data.projectile.width * PARAMS.SCALE / 2 : 
+                                                   this.x + this.BB.width / 4 - this.data.projectile.width * PARAMS.SCALE / 2, this.y, this.data.range,
+                                                   {x: unitVect.x * this.data.projectile.velocity, y: unitVect.y * this.data.projectile.velocity}, 
+                                                   this.data.projectile.pattern, true, this.data.projectile.width, this.data.projectile.height, 
+                                                   this.data.projectile.sprite));
             }
         } else {
             let centerDrawPoint = { x: this.hero.BB.center.x + Math.cos(this.rotationAngle) * this.rotationRadius, 
