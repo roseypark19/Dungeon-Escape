@@ -16,7 +16,7 @@ class Boss {
         this.elapsedTimePattern = 0;
         this.pattern = randomInt(Object.keys(SHOT_PATTERNS).length - 1) + 1;
         this.dexterity = 0.2;
-        this.patternSwitch = 0.5;
+        this.patternSwitch = 0.1;
         this.range = 300;
         this.animations = [];
         this.updateBB();
