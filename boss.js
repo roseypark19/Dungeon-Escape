@@ -16,7 +16,7 @@ class Boss {
         this.elapsedTimePattern = 0;
         this.pattern = randomInt(Object.keys(SHOT_PATTERNS).length - 1) + 1;
         this.dexterity = 0.2;
-        this.patternSwitch = 0.1;
+        this.patternSwitch = 0.05;
         this.range = 300;
         this.animations = [];
         this.updateBB();
@@ -79,7 +79,9 @@ class Boss {
             this.game.addEntity(new Projectile(this.game, this.getCenterPoint().x, this.getCenterPoint().y, this.range,
                                                {x: shotUnitVector.x * 2, y: shotUnitVector.y * 2}, this.pattern, false, 13, 14, "./sprites/fireball.png"));
             this.elapsedTimePattern += this.game.clockTick;
+            console.log(this.elapsedTimePattern);
             if (this.elapsedTimePattern > this.patternSwitch) {
+                console.log("switch");
                 let oldPattern = this.pattern;
                 while (this.pattern === oldPattern) {
                     this.pattern = randomInt(Object.keys(SHOT_PATTERNS).length - 1) + 1;
