@@ -4,7 +4,6 @@ class Projectile {
         this.spritesheet = ASSET_MANAGER.getAsset(sprite);
         this.originPoint = {x: this.x, y: this.y};
         this.vectorPoint = {x: this.x, y: this.y};
-        this.update();
         this.updateBB();
     }
 

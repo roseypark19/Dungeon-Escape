@@ -43,11 +43,11 @@ const SHOT_PATTERNS = {
 
     // spiral of archimedes behavior
     3: function(projectile) {
-        let rotations = 5;
+        let rotations = 5 + 0.5;
         if (!projectile.angularVel) projectile.angularVel = magnitude(projectile.velocity) / projectile.range * 2 * Math.PI * rotations;
-        projectile.theta = projectile.theta >= 0 ? projectile.theta + projectile.angularVel : 0;
-        if (projectile.theta <= 2 * Math.PI * rotations) {
-            let radius = projectile.theta / (2 * Math.PI * rotations) * projectile.range / 2;
+        projectile.theta = projectile.theta ? projectile.theta - projectile.angularVel : 2 * Math.PI * (rotations - 0.5) - Math.PI;
+        if (projectile.theta >= 0) {
+            let radius = projectile.theta / (2 * Math.PI * (rotations - 0.5) - Math.PI) * projectile.range / 2;
             let unitVect = unitVector(projectile.velocity);
             let origin = {x: projectile.originPoint.x + unitVect.x * projectile.range / 2, 
                           y: projectile.originPoint.y + unitVect.y * projectile.range / 2};
