@@ -81,7 +81,6 @@ class Boss {
             this.elapsedTimePattern += this.game.clockTick;
             console.log(this.elapsedTimePattern);
             if (this.elapsedTimePattern > this.patternSwitch) {
-                console.log("switch");
                 let oldPattern = this.pattern;
                 while (this.pattern === oldPattern) {
                     this.pattern = randomInt(Object.keys(SHOT_PATTERNS).length - 1) + 1;
