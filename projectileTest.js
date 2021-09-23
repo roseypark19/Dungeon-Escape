@@ -1,6 +1,6 @@
 class Projectile {
-    constructor(game, x, y, range, velocity, shotPattern, friendly, width, height, sprite) {
-        Object.assign(this, {game, x, y, range, velocity, shotPattern, friendly, width, height});
+    constructor(game, x, y, range, velocity, shotPattern, friendly, width, height, scale, sprite) {
+        Object.assign(this, {game, x, y, range, velocity, shotPattern, friendly, width, height, scale});
         this.spritesheet = ASSET_MANAGER.getAsset(sprite);
         this.originPoint = {x: this.x, y: this.y};
         this.vectorPoint = {x: this.x, y: this.y};
@@ -8,8 +8,8 @@ class Projectile {
     }
 
     updateBB() {
-        this.BB = new BoundingBox(this.x + this.width * PARAMS.SCALE / 6, this.y + this.height * PARAMS.SCALE / 6, 
-                                  this.width * PARAMS.SCALE * 2 / 3, this.height * PARAMS.SCALE * 2 / 3, this.BB);
+        this.BB = new BoundingBox(this.x + this.width * this.scale / 6, this.y + this.height * this.scale / 6, 
+                                  this.width * this.scale * 2 / 3, this.height * this.scale * 2 / 3, this.BB);
     };
 
     update() {    
@@ -43,8 +43,17 @@ class Projectile {
     };
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet, 0, 0, this.width, this.height, this.x - this.game.camera.x, this.y - this.game.camera.y, this.width * PARAMS.SCALE, 
-                                                                                                                                 this.height * PARAMS.SCALE);
+        ctx.drawImage(this.spritesheet, 0, 0, this.width, this.height, this.x - this.game.camera.x, this.y - this.game.camera.y, this.width * this.scale, 
+                      this.height * this.scale);
+
+        // ctx.fillStyle = this.friendly ? 'Orange' : 'Silver';
+        // ctx.strokeStyle = 'Black';
+        // ctx.lineWidth = 4;
+        // ctx.beginPath();
+        // ctx.arc(this.BB.center.x - this.game.camera.x, this.BB.center.y - this.game.camera.y, this.BB.width / 2, 0, Math.PI * 2);
+        // ctx.stroke();
+        // ctx.fill();
+        
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = PARAMS.DEBUG_COLOR;
             ctx.lineWidth = PARAMS.DEBUG_WIDTH;

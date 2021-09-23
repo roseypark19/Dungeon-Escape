@@ -46,7 +46,7 @@ const HERO_DIMENSIONS = { width : 16, height : 28 };
 
 const WEAPON_DATA = [{width : 10, height : 22, sprite : "./sprites/baton.png"}, 
                      {width : 30, height : 30, sprite : "./sprites/staff.png", range: 500,
-                      projectile : { sprite: "./sprites/fireball.png", velocity: 0.3, width: 13, height: 14, pattern: 3}}, 
+                      projectile : { sprite: "./sprites/fireball.png", velocity: 8, width: 13, height: 14, scale: 2.5, pattern: 0}}, 
                      {width : 24, height : 24, sprite : "./sprites/sword_gold.png" }, 
                      {width : 8, height : 19, sprite : "./sprites/cleaver.png"}]
 

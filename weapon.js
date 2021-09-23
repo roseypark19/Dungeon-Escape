@@ -71,10 +71,10 @@ class Weapon {
             if (this.elapsedTimeShoot >= 0) {
                 this.elapsedTimeShoot = -this.shootTime * 2;
                 this.game.addEntity(new Projectile(this.game, this.hero.facing === 0 ? 
-                                                   this.x + this.BB.width * 3 / 4 - this.data.projectile.width * PARAMS.SCALE / 2 : 
-                                                   this.x + this.BB.width / 4 - this.data.projectile.width * PARAMS.SCALE / 2, this.y, this.data.range,
+                                                   this.x + this.BB.width * 3 / 4 - this.data.projectile.width * this.data.projectile.scale / 2 : 
+                                                   this.x + this.BB.width / 4 - this.data.projectile.width * this.data.projectile.scale / 2, this.y, this.data.range,
                                                    {x: unitVect.x * this.data.projectile.velocity, y: unitVect.y * this.data.projectile.velocity}, 
-                                                   this.data.projectile.pattern, true, this.data.projectile.width, this.data.projectile.height, 
+                                                   this.data.projectile.pattern, true, this.data.projectile.width, this.data.projectile.height, this.data.projectile.scale,
                                                    this.data.projectile.sprite));
             }
         } else {

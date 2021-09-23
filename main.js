@@ -33,6 +33,8 @@ ASSET_MANAGER.queueDownload("./sprites/sword_gold.png");
 ASSET_MANAGER.queueDownload("./sprites/cleaver.png");
 ASSET_MANAGER.queueDownload("./sprites/tiles.png");
 ASSET_MANAGER.queueDownload("./sprites/fireball.png");
+ASSET_MANAGER.queueDownload("./sprites/shadowball.png");
+ASSET_MANAGER.queueDownload("./sprites/slimeball.png");
 
 // music
 ASSET_MANAGER.queueDownload("./music/mudholes.mp3");
