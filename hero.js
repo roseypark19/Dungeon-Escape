@@ -5,7 +5,7 @@ class Hero {
         this.facing = 0; // 0 = right, 1 = left
         this.state = 0; // 0 = idle, 1 = walking, 2 = hit
         this.shooting = 0; // 0 = not shooting, 1 = shooting
-        this.velocityConstant = 7 * PARAMS.SCALE / PARAMS.STANDARD_SCALE;
+        this.velocityConstant = 7;
         this.velocity = { x : 0, y : 0 };
         this.animations = [];
         this.updateBB();
