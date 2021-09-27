@@ -80,7 +80,7 @@ class Boss {
             let shotUnitVector = {x: shotVector.x / magnitude(shotVector), y: shotVector.y / magnitude(shotVector)};
             this.game.addEntity(new Projectile(this.game, this.collisionBB.center.x - 120 * 0.3 / 2, 
                                                this.collisionBB.center.y - 120 * 0.3 / 2, this.range,
-                                               {x: shotUnitVector.x * 2, y: shotUnitVector.y * 2}, this.pattern, false, 120, 120, 0.3, "./sprites/slimeball.png"));
+                                               {x: shotUnitVector.x * 4, y: shotUnitVector.y * 4}, this.pattern, false, 120, 120, 0.3, "./sprites/slimeball.png"));
             if (this.elapsedTimePattern > this.patternSwitch) {
                 let oldPattern = this.pattern;
                 while (this.pattern === oldPattern) {
