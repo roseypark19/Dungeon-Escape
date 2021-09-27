@@ -5,7 +5,7 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
 
-        this.hero = new Hero(game, 0, 0, 2);
+        // this.hero = new Hero(game, 0, 0, 2);
         this.loadLevel(levelOne, 239, 330);
     };
 
@@ -35,8 +35,7 @@ class SceneManager {
                 }
             }
             if (i === 0) {
-                this.hero.x = heroX;
-                this.hero.y = heroY;
+                this.hero = HeroFactory.createHero(this.game, heroX, heroY, 2);
                 this.game.addEntity(this.hero);
                 this.game.addEntity(new Boss(this.game, 900, 1000, 2, this.hero));
                 this.game.addEntity(new Boss(this.game, 1400, 1250, 1, this.hero));
@@ -63,9 +62,7 @@ class SceneManager {
         this.y = this.hero.y - midpoint.y;
     };
 
-    draw(ctx) {
-
-    };
+    draw(ctx) {};
 
 
 }

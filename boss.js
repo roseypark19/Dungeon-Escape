@@ -16,7 +16,7 @@ class Boss {
         this.elapsedTimePattern = 0;
         this.pattern = randomInt(Object.keys(SHOT_PATTERNS).length - 1) + 1;
         this.dexterity = 0.6;
-        this.patternSwitch = 5;
+        this.patternSwitch = 2;
         this.range = 300;
         this.animations = [];
         this.updateBB();
@@ -78,8 +78,9 @@ class Boss {
             this.elapsedTimeShoot = 0;
             let shotVector = {x: heroCenter.x - this.getCenterPoint().x, y: heroCenter.y - this.getCenterPoint().y};
             let shotUnitVector = {x: shotVector.x / magnitude(shotVector), y: shotVector.y / magnitude(shotVector)};
-            this.game.addEntity(new Projectile(this.game, this.getCenterPoint().x, this.getCenterPoint().y, this.range,
-                                               {x: shotUnitVector.x * 2, y: shotUnitVector.y * 2}, this.pattern, false, 160, 160, 0.3, "./sprites/slimeball.png"));
+            this.game.addEntity(new Projectile(this.game, this.collisionBB.center.x - 160 * 0.3 * scaleRatio() / 2, 
+                                               this.collisionBB.center.y - 160 * 0.3 * scaleRatio() / 2, this.range,
+                                               {x: shotUnitVector.x * 2 * scaleRatio(), y: shotUnitVector.y * 2 * scaleRatio()}, this.pattern, false, 160, 160, 0.3 * scaleRatio(), "./sprites/slimeball.png"));
             if (this.elapsedTimePattern > this.patternSwitch) {
                 let oldPattern = this.pattern;
                 while (this.pattern === oldPattern) {
@@ -95,7 +96,7 @@ class Boss {
         this.game.entities.forEach(function(entity) {
             if (entity.BB && that.collisionBB.collide(entity.BB)) {
                 if (entity instanceof Boundary) {
-                    resolveCollision(that, entity);
+                    Collision.resolveCollision(that, entity);
                     that.updateBB();  
                 } else if (entity instanceof Projectile && entity.friendly) {
                     entity.removeFromWorld = true;

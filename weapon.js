@@ -13,10 +13,10 @@ class Weapon {
         this.elapsedTimeShoot = 0;
         this.shootTime = 0.075;
         this.oscillateTime = 0.02;
-        this.maxAdjust = 14 / 3 * PARAMS.SCALE;
+        this.maxAdjust = 14;
         this.counter = 0;
         this.rotationAngle = 0;
-        this.rotationRadius = 60 / 3 * PARAMS.SCALE;
+        this.rotationRadius = 60;
         this.spritesheet = ASSET_MANAGER.getAsset(this.data.sprite);
         this.animations = [];
         this.updateBB();
@@ -33,9 +33,9 @@ class Weapon {
 
         // non-shooting animations
         this.animations[0][0] = new Animator(this.spritesheet, 0, 0, this.data.width, 
-                                             this.data.height, 1, 0.15, false, true);
+                                             this.data.height, 1, this.shootTime, false, true);
         this.animations[0][1] = new Animator(this.spritesheet, 2 * this.data.width, 0, 
-                                             this.data.width, this.data.height, 1, 0.15, false, true);
+                                             this.data.width, this.data.height, 1, this.shootTime, false, true);
 
         //shooting animations
         this.animations[1][0] = new Animator(this.spritesheet, 0, 0, this.data.width, 

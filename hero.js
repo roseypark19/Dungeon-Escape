@@ -1,15 +1,11 @@
 class Hero {
-    constructor(game, x, y, code) {
-        Object.assign(this, { game, x, y });
-        this.spritesheet = ASSET_MANAGER.getAsset(HERO_SPRITES[code]);
-        this.code = code;
-        this.weapon = new Weapon(this.game, this);
+    constructor(game, x, y, sprite, code) {
+        Object.assign(this, { game, x, y, code });
+        this.spritesheet = ASSET_MANAGER.getAsset(sprite);
         this.facing = 0; // 0 = right, 1 = left
         this.state = 0; // 0 = idle, 1 = walking, 2 = hit
         this.shooting = 0; // 0 = not shooting, 1 = shooting
-        this.maxVelocity = 7 / 3 * PARAMS.SCALE;
-        this.accelerationConstant = 0.1 / 3 * PARAMS.SCALE;
-        this.dead = false;
+        this.velocityConstant = 7 * PARAMS.SCALE / PARAMS.STANDARD_SCALE;
         this.velocity = { x : 0, y : 0 };
         this.animations = [];
         this.updateBB();
@@ -54,49 +50,33 @@ class Hero {
 
         let newVelX = 0;
         let newVelY = 0;
-        let accelX = 0;
-        let accelY = 0;
         
         if (this.game.right) {
-            accelX += this.accelerationConstant;
+            newVelX += this.velocityConstant;
             this.facing = 0;
         }
         if (this.game.left) {
-            accelX -= this.accelerationConstant;
+            newVelX -= this.velocityConstant;
             this.facing = 1;
         }
         if (this.game.up) {
-            accelY -= this.accelerationConstant;
+            newVelY -= this.velocityConstant;
         }
         if (this.game.down) {
-            accelY += this.accelerationConstant;
+            newVelY += this.velocityConstant;
         }
 
-        if (accelX !== 0) newVelX = this.hasChangedDirection(accelX, this.velocity.x) ? accelX : this.velocity.x + accelX;
-        if (Math.abs(newVelX) > this.maxVelocity) newVelX = newVelX > 0 ? this.maxVelocity : -this.maxVelocity;
-        if (accelY !== 0) newVelY = this.hasChangedDirection(accelY, this.velocity.y) ? accelY : this.velocity.y + accelY;
-        if (Math.abs(newVelY) > this.maxVelocity) newVelY = newVelY > 0 ? this.maxVelocity : -this.maxVelocity;
+        if (newVelX !== 0 && newVelY !== 0) var diagonalVel = Math.sqrt(Math.pow(this.velocityConstant, 2) / 2);
 
-        let diagonalVel = 0;
-        let maxVelComponent = 0;
-        if (newVelX !== 0 && newVelY !== 0) {
-            maxVelComponent = Math.max(Math.abs(newVelX), Math.abs(newVelY));
-            diagonalVel = Math.sqrt(Math.pow(maxVelComponent, 2) / 2);
-        }
+        if (diagonalVel) {
+            newVelX = newVelX > 0 ? diagonalVel : -diagonalVel;
+            newVelY = newVelY > 0 ? diagonalVel : -diagonalVel;
+        } 
 
         this.velocity.x = newVelX;
         this.velocity.y = newVelY;
-
-        let diagonalX = this.velocity.x > 0 ? diagonalVel : -diagonalVel;
-        let diagonalY = this.velocity.y > 0 ? diagonalVel : -diagonalVel;
-
-        if (diagonalVel !== 0) {
-            this.x += diagonalX;
-            this.y += diagonalY;
-        } else {
-            this.x += this.velocity.x;
-            this.y += this.velocity.y;
-        }
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
 
         this.state = this.velocity.x === 0 && this.velocity.y === 0 ? 0 : 1;
         this.shooting = this.game.clicked ? 1 : 0;
@@ -110,11 +90,9 @@ class Hero {
         this.originalCollisionBB = this.collisionBB.previous;
         var that = this;
         this.game.entities.forEach(function(entity) {
-            if (entity.BB && that.collisionBB.collide(entity.BB)) {
-                if (entity instanceof Boundary) {
-                    resolveCollision(that, entity);
-                    that.updateBB();  
-                }
+            if (entity instanceof Boundary && that.collisionBB.collide(entity.BB)) {
+                Collision.resolveCollision(that, entity);
+                that.updateBB();  
             }
         });
     };

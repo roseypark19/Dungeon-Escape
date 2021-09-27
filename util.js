@@ -46,9 +46,10 @@ const HERO_DIMENSIONS = { width : 16, height : 28 };
 
 const WEAPON_DATA = [{width : 10, height : 22, sprite : "./sprites/baton.png"}, 
                      {width : 30, height : 30, sprite : "./sprites/staff.png", range: 500,
-                      projectile : { sprite: "./sprites/fireball.png", velocity: 8, width: 13, height: 14, scale: 2.5, pattern: 0}}, 
+                      projectile : { sprite: "./sprites/fireball.png", velocity: 8, 
+                                     width: 13, height: 14, scale: 2.5, pattern: 0}}, 
                      {width : 24, height : 24, sprite : "./sprites/sword_gold.png" }, 
-                     {width : 8, height : 19, sprite : "./sprites/cleaver.png"}]
+                     {width : 8, height : 19, sprite : "./sprites/cleaver.png"}];
 
 const BOSS_DATA = [{width : 32, height : 36, sprite : "./sprites/bigdemon.png"}, 
                    {width : 32, height : 32, sprite : "./sprites/bigogre.png"}, 
@@ -65,82 +66,8 @@ const PARAMS = {
     DEBUG_COLOR: 'White',
     CANVAS_WIDTH : 1200,
     CANVAS_HEIGHT : 1200,
-    SCALE : 3
+    SCALE : 3,
 };
 
-function collide(collisionBB, originalCollisionBB, boundary) {
-    if (boundary.top) {
-        var top = topCollision(collisionBB, originalCollisionBB, boundary.BB);
-        if (top) return top;
-    }
-    if (boundary.bottom) {
-        var bottom = bottomCollision(collisionBB, originalCollisionBB, boundary.BB);
-        if (bottom) return bottom;
-    }
-    if (boundary.left) {
-        var left = leftCollision(collisionBB, originalCollisionBB, boundary.BB);
-        if (left) return left;
-    }
-    if (boundary.right) {
-        var right = rightCollision(collisionBB, originalCollisionBB, boundary.BB);
-        if (right) return right;
-    }
-};
 
-function leftCollision(collisionBB, originalCollisionBB, boundaryBB) {
-    if (collisionBB.x - originalCollisionBB.x > 0) {
-        if (collisionBB.right > boundaryBB.left && originalCollisionBB.right <= boundaryBB.left) {
-            return { x: -1, y: 0 };
-        }
-    }
-    return false;
-};
-
-function rightCollision(collisionBB, originalCollisionBB, boundaryBB) {
-    if (collisionBB.x - originalCollisionBB.x < 0) {
-        if (collisionBB.left < boundaryBB.right && originalCollisionBB.left >= boundaryBB.right) {
-            return { x: 1, y: 0 };
-        }
-    }
-    return false;
-};
-
-function topCollision(collisionBB, originalCollisionBB, boundaryBB) {
-    if (collisionBB.y - originalCollisionBB.y > 0) {
-        if (collisionBB.bottom > boundaryBB.top && originalCollisionBB.bottom <= boundaryBB.top) {
-            return { x: 0, y: -1 };
-        }
-    }
-    return false;
-};
-
-function bottomCollision(collisionBB, originalCollisionBB, boundaryBB) {
-    if (collisionBB.y - originalCollisionBB.y < 0) {
-        if (collisionBB.top < boundaryBB.bottom && originalCollisionBB.top >= boundaryBB.bottom) {
-            return { x: 0, y: 1 };
-        }
-    }
-    return false;
-};
-
-function resolveCollision(entity, boundary) {
-    let collisionResolution = collide(entity.collisionBB, entity.originalCollisionBB, boundary);
-    if (collisionResolution) {
-        if (collisionResolution.x !== 0) {
-            entity.velocity.x = 0;
-            if (collisionResolution.x < 0) {
-                entity.x = boundary.BB.left - entity.collisionBB.width - (entity.BB.width - entity.collisionBB.width) / 2;
-            } else if (collisionResolution.x > 0) {
-                entity.x = boundary.BB.right - (entity.BB.width - entity.collisionBB.width) / 2;
-            }
-        } else if (collisionResolution.y !== 0) {
-            entity.velocity.y = 0;
-            if (collisionResolution.y > 0) {
-                entity.y = boundary.BB.bottom - (entity.BB.height - entity.collisionBB.height);
-            } else if (collisionResolution.y < 0) {
-                entity.y = boundary.BB.top - entity.BB.height;
-            }
-        }
-    } 
-};
 
