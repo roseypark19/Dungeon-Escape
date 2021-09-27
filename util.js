@@ -66,7 +66,7 @@ const PARAMS = {
     DEBUG_COLOR: 'White',
     CANVAS_WIDTH : 1200,
     CANVAS_HEIGHT : 1200,
-    SCALE : 3,
+    SCALE : 3
 };
 
 

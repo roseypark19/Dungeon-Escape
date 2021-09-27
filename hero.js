@@ -102,10 +102,6 @@ class Hero {
         this.collisionBB = new BoundingBox(this.x, this.y + (HERO_DIMENSIONS.height * 2 / 3 * PARAMS.SCALE), 
                                            HERO_DIMENSIONS.width * PARAMS.SCALE, HERO_DIMENSIONS.height * PARAMS.SCALE / 3, this.collisionBB);
     };
-
-    hasChangedDirection(acceleration, velocity) {
-        return (acceleration < 0 && velocity > 0) || (acceleration > 0 && velocity < 0);
-    };
     
     draw(ctx) {
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, PARAMS.SCALE);
@@ -122,7 +118,6 @@ class Hero {
     };
 
     getCenterPoint() {
-        // return { x : this.x + HERO_DIMENSIONS.width * PARAMS.SCALE / 2, y : this.y + HERO_DIMENSIONS.height * PARAMS.SCALE / 2 };
         return this.collisionBB.center;
     };
 };
