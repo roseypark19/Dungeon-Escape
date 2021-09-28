@@ -13,7 +13,7 @@ const SHOT_PATTERNS = {
     // sin-wave behavior
     1: function(projectile) {
         if (projectile.updateVectorPoint()) {
-            let radians = distance(projectile.vectorPoint, projectile.originPoint) / projectile.range * 8 * Math.PI;
+            let radians = distance(projectile.vectorPoint, projectile.originPoint) / projectile.range * 4 * Math.PI;
             let shift = Math.sin(radians) * 75;
             // we need to find a unit vector perpendicular to the velocity vector
             let perpVect = {x: projectile.velocity.y, y: -projectile.velocity.x};
