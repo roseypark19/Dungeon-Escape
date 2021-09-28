@@ -94,6 +94,9 @@ class Hero {
                 Collision.resolveCollision(that, entity);
                 that.updateBB();  
             }
+            if (entity instanceof Projectile && that.collisionBB.collide(entity.BB) && !entity.friendly) {
+                entity.removeFromWorld = true;
+            }
         });
     };
 
