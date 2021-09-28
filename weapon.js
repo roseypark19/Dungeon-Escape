@@ -11,10 +11,11 @@ class Weapon {
         this.y = 0;
         this.elapsedTimeOscillate = 0;
         this.elapsedTimeShoot = 0;
-        this.shootTime = 0.075;
+        this.shootTime = 0.07;
         this.oscillateTime = 0.02;
         this.maxAdjust = 14;
         this.counter = 0;
+        this.numRotations = 1;
         this.rotationAngle = 0;
         this.rotationRadius = 60;
         this.spritesheet = ASSET_MANAGER.getAsset(this.data.sprite);
@@ -31,17 +32,27 @@ class Weapon {
             }
         }
 
+        // populate rotated image arrays
+        let rightShoot = [];
+        for (var i = 0; i <= this.numRotations; i++) {
+            rightShoot.push(rotateImage(this.spritesheet, 0, 0, this.data.width, this.data.height, i * Math.PI / (4 * this.numRotations)));
+        };
+        let leftShoot = [];
+        for (var i = 0; i <= this.numRotations; i++) {
+            leftShoot.push(rotateImage(this.spritesheet, this.data.width, 0, this.data.width, this.data.height, i * -Math.PI / (4 * this.numRotations)));
+        };
+
         // non-shooting animations
         this.animations[0][0] = new Animator(this.spritesheet, 0, 0, this.data.width, 
                                              this.data.height, 1, this.shootTime, false, true);
-        this.animations[0][1] = new Animator(this.spritesheet, 2 * this.data.width, 0, 
+        this.animations[0][1] = new Animator(this.spritesheet, this.data.width, 0, 
                                              this.data.width, this.data.height, 1, this.shootTime, false, true);
 
-        //shooting animations
-        this.animations[1][0] = new Animator(this.spritesheet, 0, 0, this.data.width, 
-                                             this.data.height, 2, this.shootTime, false, true);
-        this.animations[1][1] = new Animator(this.spritesheet, 2 * this.data.width, 0, 
-                                             this.data.width, this.data.height, 2, this.shootTime, false, true);
+        // shooting animations
+        this.animations[1][0] = new RotationAnimator(rightShoot, this.data.width, this.data.height, 
+                                                     this.numRotations + 1, this.shootTime / this.numRotations, false, true);
+        this.animations[1][1] = new RotationAnimator(leftShoot, this.data.width, this.data.height,
+                                                     this.numRotations + 1, this.shootTime / this.numRotations, false, true);
     };
 
     update() {
@@ -51,7 +62,7 @@ class Weapon {
         this.elapsedTimeOscillate += this.game.clockTick; // update vertical oscillation data
         if (this.elapsedTimeOscillate >= this.oscillateTime) {
             this.elapsedTimeOscillate = 0;
-            this.vertAdjust = this.oscillate(this.counter, 0, this.maxAdjust) * -1;
+            this.vertAdjust = oscillate(this.counter, 0, this.maxAdjust) * -1;
             this.counter = (this.counter + 1) % (2 * this.maxAdjust);
         }
 
@@ -96,16 +107,12 @@ class Weapon {
 
     draw(ctx) {
         this.animations[this.hero.shooting][this.hero.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
-
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = PARAMS.DEBUG_COLOR;
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
     };
 
-    oscillate(input, min, max) {
-        let range = max - min;
-        return min + Math.abs(((input + range) % (range * 2)) - range);
-    };
+    
 
 };
