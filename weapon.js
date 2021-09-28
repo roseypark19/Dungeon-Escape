@@ -48,12 +48,7 @@ class Weapon {
         this.animations[0][1] = new Animator(this.spritesheet, this.data.width, 0, 
                                              this.data.width, this.data.height, 1, this.shootTime, false, true);
 
-        //shooting animations
-        // this.animations[1][0] = new Animator(this.spritesheet, 0, 0, this.data.width, 
-        //                                      this.data.height, 2, this.shootTime, false, true);
-        // this.animations[1][1] = new Animator(this.spritesheet, 2 * this.data.width, 0, 
-        //                                      this.data.width, this.data.height, 2, this.shootTime, false, true);
-
+        // shooting animations
         this.animations[1][0] = new RotationAnimator(rightShoot, this.data.width, this.data.height, 
                                                      this.numRotations + 1, this.shootTime / this.numRotations, false, true);
         this.animations[1][1] = new RotationAnimator(leftShoot, this.data.width, this.data.height,
